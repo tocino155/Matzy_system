@@ -1,0 +1,2 @@
+color amarillo #F5B32B
+color negor #000000

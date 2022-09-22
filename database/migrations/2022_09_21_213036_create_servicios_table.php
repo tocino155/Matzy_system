@@ -23,6 +23,7 @@ class CreateServiciosTable extends Migration
             $table->string("telefono")->nullable();
             $table->string("correo")->nullable();
             $table->text("observaciones")->nullable();
+            $table->string("estatus")->nullable();
         });
     }
 

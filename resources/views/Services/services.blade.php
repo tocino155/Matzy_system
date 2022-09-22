@@ -61,7 +61,7 @@
 @endif
 @if(Session::get('message')== "Se Guardo correctamente el Servicio")
     <div class="alert alert-{{ Session::get('color') }}" role="alert" style="font-weight: bold;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
           <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
           <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
@@ -79,7 +79,7 @@
 
 @if(Session::get('message')== "Se Actualizo correctamente el Servicio")
     <div class="alert alert-{{ Session::get('color') }}" role="alert" style="font-weight: bold;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
           <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
           <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
@@ -97,7 +97,7 @@
 
 @if(Session::get('message')== "Se Elimino correctamente el Servicio")
     <div class="alert alert-{{ Session::get('color') }}" role="alert" style="font-weight: bold;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-x" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-journal-x" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z"/>
           <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
           <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
@@ -137,29 +137,35 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr class="marca" onclick="pasar_id(1)">
+                    @foreach($services as $service)
+                    <tr class="marca" onclick="pasar_id({{$service->id}})">
                         <td style="text-align: center;">
-                            
+                            CMZ-{{$service->id}}
                         </td>
                         <td style="text-align: center;">
-                            
+                            <?php $contador=0; ?>
+                            @foreach($servicio_vehiculos as $servicio_vehiculo)
+                            @if($servicio_vehiculo->id_servicio==$service->id)
+                            <?php $contador++; ?>
+                            @endif
+                            @endforeach
+                            {{$contador}}
                         </td>
                         <td style="text-align: center;">
-                            
+                            {{$service->nombre}}
                         </td>
                         <td style="text-align: center;">
-                            
+                            ---
                         </td>
                         <td style="text-align: center;">
-                            
+                            ---
                         </td>
                         <td style="text-align: center;">
-                            
+                            espera
                         </td>
                         
                     </tr>
-                    
+                    @endforeach
                 </tbody>
             </table>
             
@@ -190,7 +196,7 @@
                     </div>
                     <div class="col-md-3" style="margin-bottom: 10px;">
                         <label>Folio</label>
-                        <input style="font-weight: bold; font-size: 20px;" type="text" name="folio" class="form-control" id="folio" onkeyup="activar_envio();" value="CMZ-<?php if($ultimo_id==null){echo 1;}else{echo $ultimo_id->id;} ?>" required disabled>
+                        <input style="font-weight: bold; font-size: 20px;" type="text" name="folio" class="form-control" id="folio" onkeyup="activar_envio();" value="CMZ-<?php if($ultimo_id==null){echo 1;}else{echo $ultimo_id->id+1;} ?>" required disabled>
                     </div>
                 </div>
                 <div class="row">
@@ -338,12 +344,12 @@
     </button>
 </div>
 
-<!-- modal de Editar vehiculo-->
+<!-- modal de Editar servicio-->
 <div class="modal fade" id="editar_registro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar Vehiculo</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Editar Servicio</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x-octagon" viewBox="0 0 16 16" >
                   <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
@@ -351,27 +357,131 @@
                 </svg>
             </button>
         </div>
-        <form action="{{ url('/Actualizar_vehiculo') }}" method="POST">
+        <form action="{{ url('/Actualizar_servicio') }}" method="POST">
             @csrf
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6" style="margin-bottom: 10px;">
-                        <label>Matricula</label>
-                        <input type="text" name="matricula" class="form-control" id="matricula2" onkeyup="activar_envio_2();" required>
+                    <div class="col-md-9" style="margin-bottom: 10px;">
                     </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Folio</label>
+                        <input style="font-weight: bold; font-size: 20px;" type="text" name="folio_edit" class="form-control" id="folio_edit" onkeyup="activar_envio_2();" value="CMZ-<?php if($ultimo_id==null){echo 1;}else{echo $ultimo_id->id+1;} ?>" required disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <label style="color: #888888;">Datos del Cliente</label>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label >Nombre / Empresa</label>
+                        <input type="text" name="nombre" class="form-control" id="nombre_edit" onkeyup="activar_envio();" required>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>C.P</label>
+                        <input type="text" name="cp" class="form-control" id="cp_edit" onkeyup="activar_envio_2(); if(this.value.length>=5){buscar_cp_2(this.value);}" required>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Estado</label>
+                        <input type="text" name="estado" class="form-control" id="estado_edit" onkeyup="activar_envio_2();" required readonly>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Colonia</label>
+                        <select name="colonia" class="form-control" id="colonia_edit" onkeyup="activar_envio_2();" required>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6" style="margin-bottom: 10px;">
+                        <label>Domicilio</label>
+                        <input type="text" name="domicilio" class="form-control" id="domicilio_edit" onkeyup="activar_envio_2();" required>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Telefono</label>
+                        <input type="text" name="telefono" class="form-control" id="telefono_edit" onkeyup="activar_envio_2();" required>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Correo</label>
+                        <input type="text" name="correo" class="form-control" id="correo_edit" onkeyup="activar_envio_2();" required>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <label style="color: #888888;">Datos del Vehiculo</label>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Matricula del Vehiculo</label>
+                        <select name="id_vehiculo0" class="form-control" id="id_vehiculo_edit0" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this.value,0);" required>
+
+                            <option value="" disabled selected>.:Selecciona:.</option>
+                            @foreach($vehiculos as $vehiculo)
+                            <option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre2" onkeyup="activar_envio_2();" required>
+                        <input type="text" name="nombre_vehiculo0" id="nombre_vehiculo_edit0" class="form-control" onkeyup="activar_envio_2();" required readonly>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Funcion</label>
+                        <input type="text" name="funcion0" id="funcion_edit0" class="form-control" onkeyup="activar_envio_2();" required readonly>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label></label><br>
+                        <button type="button" class="btn btn-success" style="margin-top: 8px; width: 100%;" onclick="agregar_prueba_2();"> Agregar Vehiculo</button>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <label>Funcion</label>
-                    <textarea name="funcion" class="form-control" id="funcion2" onkeyup="activar_envio_2();" required></textarea>
+
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <label style="color: #888888;">Datos del Servicio</label>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Matricula del Vehiculo</label>
+                        <input type="text" name="matricula0" id="matricula_edit0" class="form-control" onkeyup="activar_envio_2();" required readonly>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Fecha de inicio</label>
+                        <input type="date" name="fecha_inicio0" id="fecha_inicio_edit0" class="form-control" onchange="activar_envio_2(); diferecia_dias_2(0);" required>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Fecha de Termino</label>
+                        <input type="date" name="fecha_termino0" id="fecha_termino_edit0" class="form-control" onchange="activar_envio_2(); diferecia_dias_2(0);" required>
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Horas de Trabajo</label>
+                        <input type="text" name="horas_trabajo0" id="horas_trabajo_edit0" class="form-control" onkeyup="activar_envio_2();" required readonly>
+                    </div>
                 </div>
-                
+                <div class="row">
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>Mant. después de (Hrs)</label>
+                        <input type="number" name="mat_horas0" id="mat_horas_edit0" class="form-control" onkeyup="activar_envio(); mantenimiento_horas_2(0);" onchange="activar_envio_2(); mantenimiento_horas_2(0);" required min="1">
+                    </div>
+                    <div class="col-md-3" style="margin-bottom: 10px;">
+                        <label>No. Mantenimientos</label>
+                        <input type="text" name="no_mantenimientos0" id="no_mantenimientos_edit0" class="form-control" onchange="activar_envio_2();" required readonly>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 10px;">
+                        <label>Observacines</label>
+                        <textarea name="observaciones0" id="observaciones_edit0" class="form-control" rows="1" onkeyup="activar_envio_2();" ></textarea>
+                    </div>
+                </div>
+
+                <div id="contenedor_padre_edit">
+
+                </div>
+                <div class="col-md-12" style="margin-bottom: 10px;">
+                    <label>Observaciones Generales</label>
+                    <textarea name="observaciones_g" id="observaciones_edit_edit" class="form-control" onkeyup="activar_envio_2();" ></textarea>
+                </div>
             </div>
             <div class="modal-footer">
-                <input type="hidden" name="id_vehiculo_edit" id="id_vehiculo_edit">
+                <input type="hidden" name="id_servicio_edit" id="id_servicio_edit">
+                <input type="hidden" name="cantidad_vehiculos" id="cantidad_vehiculos_edit">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                 <button class="btn " disabled id="envio_button_2">Actualizar</button>
             </div>
@@ -385,7 +495,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Eliminar Vehiculo</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar Servicio</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x-octagon" viewBox="0 0 16 16" >
                   <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
@@ -393,22 +503,22 @@
                 </svg>
             </button>
         </div>
-        <form action="{{ url('/Eliminar_vehiculo') }}" method="POST">
+        <form action="{{ url('/Eliminar_servicio') }}" method="POST">
             @csrf
             @method('DELETE')
             <div class="modal-body">
-                <label style="font-weight: bold; font-size: 25px;">¿Seguro que quieres eliminar al vehiculo?</label><br><br>
+                <label style="font-weight: bold; font-size: 25px;">¿Seguro que quieres eliminar al servicio?</label><br><br>
                 <div style="text-align: center;">
 
-                    <label style=" font-weight: bold; font-size: 25px;" >Vehiculo: </label>
-                    <label style="color: red; font-weight: bold; font-size: 25px;" id="text_eliminar"></label><br>
+                    <label style=" font-weight: bold; font-size: 25px;" >Folio: </label>
+                    <label style="color: red; font-weight: bold; font-size: 25px;" id="text_folio"></label><br>
                     
-                    <label style=" font-weight: bold; font-size: 25px;" >Matricula: </label>
-                    <label style="color: red; font-weight: bold; font-size: 25px;" id="text_matricula"></label>
+                    <label style=" font-weight: bold; font-size: 25px;" >Cliente: </label>
+                    <label style="color: red; font-weight: bold; font-size: 25px;" id="text_cliente"></label>
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="hidden" name="id_vehiculo_edit" id="id_vehiculo_edit_2">
+                <input type="hidden" name="id_servicio_edit" id="id_servicio_edit_2">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button class="btn btn-danger" >Eliminar</button>
             </div>
@@ -476,23 +586,40 @@
         }
     }
 
+    //esta es la mimsa de que otra pero esta es para la de editar
     function activar_envio_2(){
 
-        if(document.getElementById("matricula2").value!="" && document.getElementById("nombre2").value!="" && document.getElementById("funcion2").value!=""){
+        if (document.getElementById("nombre_edit").value!=""&& document.getElementById("cp_edit").value!=""&& document.getElementById("estado_edit").value!=""&& document.getElementById("colonia_edit").value!=""&& document.getElementById("domicilio_edit").value!=""&& document.getElementById("telefono_edit").value!=""&& document.getElementById("correo_edit").value!="") {
 
-            document.getElementById("envio_button_2").classList.add("btn-warning");
-            document.getElementById("envio_button_2").disabled = false;
+            for (var i = 0; i < j_2; i++) {
+                try{
+
+                    if (document.getElementById("id_vehiculo_edit"+i).value!="" && document.getElementById("nombre_vehiculo_edit"+i).value!=""&& document.getElementById("funcion_edit"+i).value!="" && document.getElementById("matricula_edit"+i).value!="" && document.getElementById("fecha_inicio_edit"+i).value!="" && document.getElementById("fecha_termino_edit"+i).value!="" && document.getElementById("horas_trabajo_edit"+i).value>0 && document.getElementById("mat_horas_edit"+i).value>0 && document.getElementById("no_mantenimientos_edit"+i).value>0) {
+
+                        document.getElementById("envio_button_2").classList.add("btn-warning");
+                        document.getElementById("envio_button_2").disabled = false;
+
+                    } else {
+                        document.getElementById("envio_button_2").classList.remove("btn-warning");
+                        document.getElementById("envio_button_2").disabled = true;
+                        break;
+                    }
+
+                }catch (TypeError) {
+                  console.log("no existe ese objeto con ese nombre");
+                }
+            }
+            
         }else{
-            document.getElementById("envio_button_2").classList.remove("btn-warning");
+            document.getElementById("envio_button_2").classList.remove("btn-success");
             document.getElementById("envio_button_2").disabled = true;
         }
     }
 
-
-    var id_vehiculo=null;
+    var id_servicio=null;
 
     function pasar_id($id_tr) {
-        id_vehiculo=$id_tr;
+        id_servicio=$id_tr;
         var coordenadas_y=event.clientY; //odtenemos el valor de la posicion del boton
         var coordenadas_x=event.clientX; //odtenemos el valor de la posicion del boton
         menu_opciones.style.top=coordenadas_y-50+"px";
@@ -513,29 +640,162 @@
     }
 
     function editar_registro(){
-
+        $("#colonia_edit").empty();
+        $("#contenedor_padre_edit").empty();
+        $("#observaciones_edit_edit").empty();
+        j_2=1;
+        contador_2=0;
         $.ajax({
-          url: "{{url('/get_vehiculo')}}"+'/'+id_vehiculo,
+          url: "{{url('/get_servicios')}}"+'/'+id_servicio,
           dataType: "json",
           //context: document.body
-        }).done(function(vehiculo_data) {
-          
-            if(vehiculo_data==null){
-                document.getElementById("funcion2").value=null;
-                document.getElementById("nombre2").value=null;
-                document.getElementById("matricula2").value=null;
-                document.getElementById("id_vehiculo_edit").value=null;
-                document.getElementById("envio_button_2").classList.remove("btn-warning");
-                document.getElementById("envio_button_2").disabled = true;
+        }).done(function(service_data) {
+            if(service_data==null){
+                document.getElementById("folio_edit").value=null
+                document.getElementById("nombre_edit").value=null;
+                document.getElementById("cp_edit").value=null;
+                document.getElementById("estado_edit").value=null;
+                $("#colonia_edit").empty();
+                document.getElementById("domicilio_edit").value=null;
+                document.getElementById("telefono_edit").value=null;
+                document.getElementById("correo_edit").value=null;
+                document.getElementById("id_servicio_edit").value=null;
+                $("#observaciones_edit_edit").empty();
             }else{
 
-                document.getElementById("funcion2").value=vehiculo_data.funcion;
-                document.getElementById("nombre2").value=vehiculo_data.nombre;
-                document.getElementById("matricula2").value=vehiculo_data.matricula;
-                document.getElementById("id_vehiculo_edit").value=vehiculo_data.id;
-                document.getElementById("envio_button_2").classList.add("btn-warning");
-                document.getElementById("envio_button_2").disabled = false;
+                document.getElementById("folio_edit").value="CMZ-"+service_data.id;
+                document.getElementById("nombre_edit").value=service_data.nombre;
+                document.getElementById("cp_edit").value=service_data.cp;
+                document.getElementById("estado_edit").value=service_data.estado;
+                $("#colonia_edit").append('<option value="'+service_data.colonia+'">'+service_data.colonia+'</option>');
+                document.getElementById("domicilio_edit").value=service_data.domicilio;
+                document.getElementById("telefono_edit").value=service_data.telefono;
+                document.getElementById("correo_edit").value=service_data.correo;
+                document.getElementById("id_servicio_edit").value=service_data.id;
+                $("#observaciones_edit_edit").append(service_data.observaciones);
+                $.ajax({
+                  url: "{{url('/get_servicio_vehiculos')}}"+'/'+service_data.id,
+                  dataType: "json",
+                  //context: document.body
+                }).done(function(servicio_vehiculos_data) {
 
+                    if(servicio_vehiculos_data==null){
+
+                        $("#contenedor_padre_edit").empty();
+                        j_2=1;
+                        contador_2=0;
+
+                    }else{
+                        
+                        for(var i=0;i<servicio_vehiculos_data.length;i++){
+
+                            if(i==0){
+
+                                document.getElementById("nombre_vehiculo_edit0").value=servicio_vehiculos_data[i].nombre_vehiculo;
+                                document.getElementById("id_vehiculo_edit0").value=servicio_vehiculos_data[i].id_vehiculo;
+                                document.getElementById("funcion_edit0").value=servicio_vehiculos_data[i].funcion_vehiculo;
+                                document.getElementById("matricula_edit0").value=servicio_vehiculos_data[i].matricula_vehiculo;
+                                document.getElementById("fecha_inicio_edit0").value=servicio_vehiculos_data[i].fecha_inicio;
+                                document.getElementById("fecha_termino_edit0").value=servicio_vehiculos_data[i].fecha_fin;
+                                document.getElementById("horas_trabajo_edit0").value=servicio_vehiculos_data[i].horas_trabajo;
+                                document.getElementById("mat_horas_edit0").value=servicio_vehiculos_data[i].mantenimiento_h;
+                                document.getElementById("no_mantenimientos_edit0").value=servicio_vehiculos_data[i].no_mantenimientos;
+                                $("#observaciones_edit0").append(servicio_vehiculos_data[i].observaciones);
+
+                            }else{
+
+                                if(j_2>0){
+
+                                    $("#contenedor_padre_edit").append(
+
+                                        '<div id="contenedor_hijo_edit'+j_2+'">'+
+                                            
+                                            '<div class="row">'+
+                                                '<div class="col-md-12" style="margin-bottom: 10px;">'+
+                                                    '<label style="color: #888888;">Datos del Vehiculo</label>'+
+                                                '</div>'+
+                                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Matricula del Vehiculo</label>'+
+                                                    '<select name="id_vehiculo'+j_2+'" class="form-control" id="id_vehiculo_edit'+j_2+'" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this.value,'+j_2+');" required>'+
+                                                        '<option value="" disabled >.:Selecciona:.</option>'+
+                                                        '@foreach($vehiculos as $vehiculo)'+
+                                                        '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
+                                                        '@endforeach'+
+                                                    '</select>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Nombre</label>'+
+                                                    '<input type="text" name="nombre_vehiculo'+j_2+'" value="'+servicio_vehiculos_data[i].nombre_vehiculo+'" id="nombre_vehiculo_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Funcion</label>'+
+                                                    '<input type="text" name="funcion'+j_2+'" value="'+servicio_vehiculos_data[i].funcion_vehiculo+'" id="funcion_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label></label><br>'+
+                                                    '<button type="button" class="btn btn-danger eliminar_hijo_edit" style="margin-top: 8px; width: 100%;" id="'+j_2+'"> eliminar </button>'+
+                                                '</div>'+
+                                            '</div>'+
+
+                                            '<div class="row">'+
+                                                '<div class="col-md-12" style="margin-bottom: 10px;">'+
+                                                    '<label style="color: #888888;">Datos del Servicio</label>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Matricula del Vehiculo</label>'+
+                                                    '<input type="text" name="matricula'+j_2+'" value="'+servicio_vehiculos_data[i].matricula_vehiculo+'" id="matricula_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Fecha de inicio</label>'+
+                                                    '<input type="date" name="fecha_inicio'+j_2+'" value="'+servicio_vehiculos_data[i].fecha_inicio+'" id="fecha_inicio_edit'+j_2+'" class="form-control" onchange="activar_envio_2(); diferecia_dias_2('+j_2+');" required>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Fecha de Termino</label>'+
+                                                    '<input type="date" name="fecha_termino'+j_2+'" value="'+servicio_vehiculos_data[i].fecha_fin+'" id="fecha_termino_edit'+j_2+'" class="form-control" onchange="activar_envio_2(); diferecia_dias_2('+j_2+');" required>'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Horas de Trabajo</label>'+
+                                                    '<input type="text" name="horas_trabajo'+j_2+'" value="'+servicio_vehiculos_data[i].horas_trabajo+'" id="horas_trabajo_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="row">'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>Mant. después de (Hrs)</label>'+
+                                                    '<input type="number" name="mat_horas'+j_2+'" value="'+servicio_vehiculos_data[i].mantenimiento_h+'" id="mat_horas_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2(); mantenimiento_horas_2('+j_2+');" onchange="activar_envio_2(); mantenimiento_horas_2('+j_2+');" required min="1">'+
+                                                '</div>'+
+                                                '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                                    '<label>No. Mantenimientos</label>'+
+                                                    '<input type="text" name="no_mantenimientos'+j_2+'" value="'+servicio_vehiculos_data[i].no_mantenimientos+'" id="no_mantenimientos_edit'+j_2+'" class="form-control" onchange="activar_envio_2();" required readonly>'+ 
+                                                '</div>'+
+                                                '<div class="col-md-6" style="margin-bottom: 10px;">'+
+                                                    '<label>Observacines</label>'+
+                                                    '<textarea name="observaciones'+j_2+'" id="observaciones_edit'+j_2+'" class="form-control" rows="1" onkeyup="activar_envio_2();" >'+servicio_vehiculos_data[i].observaciones+'</textarea>'+
+                                                '</div>'+
+                                            '</div>'+
+
+                                        '</div>'
+
+                                    );
+                                    document.getElementById("id_vehiculo_edit"+j_2).value=servicio_vehiculos_data[i].id_vehiculo;
+                                    j_2++;
+                                    contador_2++;
+
+                                }
+
+                            }
+
+
+                            
+                            //console.log(contador);
+                            document.getElementById("cantidad_vehiculos_edit").value=contador_2;
+                            activar_envio_2();
+
+
+                        }
+
+                    }
+
+                });
             }
 
         });
@@ -545,18 +805,18 @@
     function eliminar_registro(){
 
         $.ajax({
-          url: "{{url('/get_vehiculo')}}"+'/'+id_vehiculo,
+          url: "{{url('/get_servicios')}}"+'/'+id_servicio,
           dataType: "json",
           //context: document.body
-        }).done(function(vehiculo_data) {
-            if(vehiculo_data==null){
-                document.getElementById("text_eliminar").innerHTML=null;
-                document.getElementById("id_user_edit_2").value=null;
-                document.getElementById("text_matricula").innerHTML=null;
+        }).done(function(service_data) {
+            if(service_data==null){
+                document.getElementById("text_folio").innerHTML=null;
+                document.getElementById("id_servicio_edit_2").value=null;
+                document.getElementById("text_cliente").innerHTML=null;
             }else{
-                document.getElementById("text_eliminar").innerHTML=vehiculo_data.nombre;
-                document.getElementById("id_vehiculo_edit_2").value=vehiculo_data.id;
-                document.getElementById("text_matricula").innerHTML=vehiculo_data.matricula;
+                document.getElementById("text_folio").innerHTML="CMZ-"+service_data.id;
+                document.getElementById("id_servicio_edit_2").value=service_data.id;
+                document.getElementById("text_cliente").innerHTML=service_data.nombre;
             }
 
         });
@@ -579,6 +839,29 @@
                 document.getElementById("estado").value=cp_data[0].estado;
                 for(var i=0;i<cp_data.length;i++){
                     $("#colonia").append('<option value="'+cp_data[i].colonia+'">'+cp_data[i].colonia+'</option>');
+                }
+            }
+
+        });
+
+    }
+    //esta es la mimsa de que otra pero esta es para la de editar
+    function buscar_cp_2(cp){
+
+        $.ajax({
+          url: "{{url('/get_cp')}}"+'/'+cp,
+          dataType: "json",
+          //context: document.body
+        }).done(function(cp_data) {
+            document.getElementById("estado_edit").value=null;
+            $("#colonia_edit").empty();
+            if(cp_data==null){
+                document.getElementById("estado_edit").value=null;
+                $("#colonia_edit").empty();
+            }else{
+                document.getElementById("estado_edit").value=cp_data[0].estado;
+                for(var i=0;i<cp_data.length;i++){
+                    $("#colonia_edit").append('<option value="'+cp_data[i].colonia+'">'+cp_data[i].colonia+'</option>');
                 }
             }
 
@@ -608,6 +891,28 @@
 
     }
 
+    function pasar_datos_vehiculo_2(id_vehiculo_select,indice){
+
+        $.ajax({
+          url: "{{url('/get_vehiculo')}}"+'/'+id_vehiculo_select,
+          dataType: "json",
+          //context: document.body
+        }).done(function(vehiculo_data) {
+
+            if(vehiculo_data==null){
+                document.getElementById("nombre_vehiculo_edit"+indice).value=null;
+                document.getElementById("funcion_edit"+indice).value=null;
+                document.getElementById("matricula_edit"+indice).value=null;
+            }else{
+                document.getElementById("nombre_vehiculo_edit"+indice).value=vehiculo_data.nombre;
+                document.getElementById("funcion_edit"+indice).value=vehiculo_data.funcion;
+                document.getElementById("matricula_edit"+indice).value=vehiculo_data.matricula;
+            }
+
+        });
+
+    }
+
     function diferecia_dias(indice){
         var fecha_1= new Date(document.getElementById("fecha_inicio"+indice).value).getTime();
         var fecha_2= new Date(document.getElementById("fecha_termino"+indice).value).getTime();
@@ -619,6 +924,20 @@
         }else{
             document.getElementById("horas_trabajo"+indice).value=null;
             document.getElementById("horas_trabajo"+indice).placeholder="operacion fallida";
+        }
+    }
+
+    function diferecia_dias_2(indice){
+        var fecha_1= new Date(document.getElementById("fecha_inicio_edit"+indice).value).getTime();
+        var fecha_2= new Date(document.getElementById("fecha_termino_edit"+indice).value).getTime();
+        //alert(fecha_1);
+        //alert((fecha_2-fecha_1)/(1000*60*60*24));   //la multiplicacion te da los milisegundos que tiene un dia, y el metodo getTime() te da el valor en milisegundos.
+        var result=((fecha_2-fecha_1)/(1000*60*60*24))*24;
+        if (result>=1){
+            document.getElementById("horas_trabajo_edit"+indice).value=((fecha_2-fecha_1)/(1000*60*60*24))*24;
+        }else{
+            document.getElementById("horas_trabajo_edit"+indice).value=null;
+            document.getElementById("horas_trabajo_edit"+indice).placeholder="operacion fallida";
         }
     }
 
@@ -634,6 +953,20 @@
             document.getElementById("no_mantenimientos"+indice).placeholder="operacion fallida";
         }
         activar_envio();
+    }
+
+    function mantenimiento_horas_2(indice){    
+
+        var dato= document.getElementById("mat_horas_edit"+indice).value;
+        var dato_2=0;
+        if (document.getElementById("horas_trabajo_edit"+indice).value>=1 && dato>=1){
+            dato_2= document.getElementById("horas_trabajo_edit"+indice).value;
+            document.getElementById("no_mantenimientos_edit"+indice).value=Math.round(dato_2/dato);
+        }else{
+            document.getElementById("no_mantenimientos_edit"+indice).value=null;
+            document.getElementById("no_mantenimientos_edit"+indice).placeholder="operacion fallida";
+        }
+        activar_envio_2();
     }
 
 
@@ -723,6 +1056,92 @@
             activar_envio();
     }
 
+    var j_2=1;
+    var contador_2=0;
+    function agregar_prueba_2(){
+
+            if(j_2>0){
+
+                $("#contenedor_padre_edit").append(
+
+                    '<div id="contenedor_hijo_edit'+j_2+'">'+
+                        
+                        '<div class="row">'+
+                            '<div class="col-md-12" style="margin-bottom: 10px;">'+
+                                '<label style="color: #888888;">Datos del Vehiculo</label>'+
+                            '</div>'+
+                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Matricula del Vehiculo</label>'+
+                                '<select name="id_vehiculo'+j_2+'" class="form-control" id="id_vehiculo_edit'+j_2+'" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this.value,'+j_2+');" required>'+
+                                    '<option value="" disabled selected>.:Selecciona:.</option>'+
+                                    '@foreach($vehiculos as $vehiculo)'+
+                                    '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
+                                    '@endforeach'+
+                                '</select>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Nombre</label>'+
+                                '<input type="text" name="nombre_vehiculo'+j_2+'" id="nombre_vehiculo_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Funcion</label>'+
+                                '<input type="text" name="funcion'+j_2+'" id="funcion_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label></label><br>'+
+                                '<button type="button" class="btn btn-danger eliminar_hijo_edit" style="margin-top: 8px; width: 100%;" id="'+j_2+'"> eliminar </button>'+
+                            '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                            '<div class="col-md-12" style="margin-bottom: 10px;">'+
+                                '<label style="color: #888888;">Datos del Servicio</label>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Matricula del Vehiculo</label>'+
+                                '<input type="text" name="matricula'+j_2+'" id="matricula_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Fecha de inicio</label>'+
+                                '<input type="date" name="fecha_inicio'+j_2+'" id="fecha_inicio_edit'+j_2+'" class="form-control" onchange="activar_envio_2(); diferecia_dias_2('+j_2+');" required>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Fecha de Termino</label>'+
+                                '<input type="date" name="fecha_termino'+j_2+'" id="fecha_termino_edit'+j_2+'" class="form-control" onchange="activar_envio_2(); diferecia_dias_2('+j_2+');" required>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Horas de Trabajo</label>'+
+                                '<input type="text" name="horas_trabajo'+j_2+'" id="horas_trabajo_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2();" required readonly>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="row">'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Mant. después de (Hrs)</label>'+
+                                '<input type="number" name="mat_horas'+j_2+'" id="mat_horas_edit'+j_2+'" class="form-control" onkeyup="activar_envio_2(); mantenimiento_horas_2('+j_2+');" onchange="activar_envio_2(); mantenimiento_horas_2('+j_2+');" required min="1">'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>No. Mantenimientos</label>'+
+                                '<input type="text" name="no_mantenimientos'+j_2+'" id="no_mantenimientos_edit'+j_2+'" class="form-control" onchange="activar_envio_2();" required readonly>'+ 
+                            '</div>'+
+                            '<div class="col-md-6" style="margin-bottom: 10px;">'+
+                                '<label>Observacines</label>'+
+                                '<textarea name="observaciones'+j_2+'" id="observaciones_edit'+j_2+'" class="form-control" rows="1" onkeyup="activar_envio_2();" ></textarea>'+
+                            '</div>'+
+                        '</div>'+
+
+                    '</div>'
+
+
+                );
+                j_2++;
+                contador_2++;
+
+            }
+            //console.log(contador);
+            document.getElementById("cantidad_vehiculos_edit").value=contador_2;
+            activar_envio_2();
+    }
+
     $(document).on('click', '.eliminar_hijo', function(){
         var id=$(this).attr("id"); 
         $('#contenedor_hijo'+id+'').remove();
@@ -730,6 +1149,15 @@
         //j--;
         document.getElementById("cantidad_vehiculos").value=contador;
         activar_envio();
+    });
+
+    $(document).on('click', '.eliminar_hijo_edit', function(){
+        var id=$(this).attr("id"); 
+        $('#contenedor_hijo_edit'+id+'').remove();
+        contador--;
+        //j--;
+        document.getElementById("cantidad_vehiculos_edit").value=contador;
+        activar_envio_2();
     });
     
 </script>

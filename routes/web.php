@@ -26,6 +26,8 @@ Route::get('/', function () {
 Route::get('/get_user/{id}', [SearchesController::class,'search_user'])->name('search_user');
 Route::get('/get_vehiculo/{id}', [SearchesController::class,'search_vehiculo'])->name('search_vehiculo');
 Route::get('/get_cp/{cp}', [SearchesController::class,'search_cp'])->name('search_cp');
+Route::get('/get_servicios/{id}', [SearchesController::class,'search_service'])->name('search_service');
+Route::get('/get_servicio_vehiculos/{id_servicio}', [SearchesController::class,'search_service_vehiculo'])->name('search_service_vehiculo');
 
 //home
 Route::get('/Home', [HomeController::class,'view_home'])->name('home');
@@ -45,5 +47,5 @@ Route::delete('/Eliminar_vehiculo',[CatalogosController::class,'eliminar_vehicul
 //services
 Route::get('/Servicios',[ServicesController::class,'view_services'])->name('services');
 Route::post('/guardar_servicio',[ServicesController::class,'agregar_service'])->name('agregar_service');
-Route::post('/Actualizar_servicio',[ServicesController::class,'actualizar_vehiculo'])->name('actualizar_service');
-Route::delete('/Eliminar_servicio',[ServicesController::class,'eliminar_vehiculo'])->name('eliminar_service');
+Route::post('/Actualizar_servicio',[ServicesController::class,'actualizar_service'])->name('actualizar_service');
+Route::delete('/Eliminar_servicio',[ServicesController::class,'eliminar_service'])->name('eliminar_service');

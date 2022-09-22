@@ -402,7 +402,7 @@
         }
     }
 
-
+    //esta es la mimsa de que otra pero esta es para la de editar son dos ya que son dos campos
     function ver_contrasena3(){
 
         if(document.getElementById("contrasena_2").type=="password"){
@@ -454,6 +454,7 @@
         }
     }
 
+    //esta es la mimsa de que otra pero esta es para la de editar
     function activar_envio_2(){
 
         if(document.getElementById("contrasena2_2").value=="" && document.getElementById("contrasena_2").value=="" && document.getElementById("nombre_2").value!="" && document.getElementById("correo_2").value!=""){

@@ -28,4 +28,14 @@ class SearchesController extends Controller
         $cp_data=DB::table("cat_estados")->where("cp",$cp)->get();
         return json_encode($cp_data);
     }
+
+    public function search_service($id){
+        $service_data=DB::table("servicios")->where("id",$id)->first();
+        return json_encode($service_data);
+    }
+
+    public function search_service_vehiculo($id_servicio){
+        $servicio_vehiculos_data=DB::table("servicio_vehiculo")->where("id_servicio",$id_servicio)->get();
+        return json_encode($servicio_vehiculos_data);
+    }
 }

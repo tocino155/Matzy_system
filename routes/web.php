@@ -49,3 +49,4 @@ Route::get('/Servicios',[ServicesController::class,'view_services'])->name('serv
 Route::post('/guardar_servicio',[ServicesController::class,'agregar_service'])->name('agregar_service');
 Route::post('/Actualizar_servicio',[ServicesController::class,'actualizar_service'])->name('actualizar_service');
 Route::delete('/Eliminar_servicio',[ServicesController::class,'eliminar_service'])->name('eliminar_service');
+Route::get('/PDF_servicio/{id}',[ServicesController::class,'pdf_service'])->name('pdf_service');

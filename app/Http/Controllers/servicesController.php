@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use PDF;
 
 class ServicesController extends Controller
 {
@@ -130,5 +131,15 @@ class ServicesController extends Controller
         }
 
 
+    }
+
+    public function pdf_service($id){
+
+        $datos=DB::table("servicios")->where("id",$id)->first();
+        $servicio_vehiculos=DB::table("servicio_vehiculo")->where("id_servicio",$id)->get();
+
+        $pdf = PDF::loadView('Services.pdf_services',compact("datos","servicio_vehiculos"))->setPaper(array(0,0,1186,1536));
+        //$nombre_pdf="Matriz Master_".$proyectos->nombre.".pdf";
+        return $pdf->stream("prueba.pdf");
     }
 }

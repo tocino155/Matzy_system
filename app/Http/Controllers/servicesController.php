@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use PDF;
+
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MessageSent;
 //esta es para poder acceder a los datos del usuario
 use Illuminate\Support\Facades\Auth;
+
 
 class ServicesController extends Controller
 {
@@ -27,6 +29,7 @@ class ServicesController extends Controller
     }
 
     public function agregar_service(Request $request){
+
         
         try {
 
@@ -40,12 +43,16 @@ class ServicesController extends Controller
                 "telefono"=>$request["telefono"],
                 "correo"=>$request["correo"],
                 "observaciones"=>$request["observaciones_g"],
+
                 "finanza"=>"no",
+
             ]);
 
             //odtenemos el id del registro servicios para ligarlo con los vehiculos agregados
             $id = DB::getPdo()->lastInsertId();
+
             $contador=0;
+
             for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
 
                 DB::table("servicio_vehiculo")->insert([
@@ -62,11 +69,13 @@ class ServicesController extends Controller
                     "no_mantenimientos"=>$request["no_mantenimientos".$i],
                     "observaciones"=>$request["observaciones".$i],
                 ]);
+
                 $contador++;
             }
 
             $data =["usuario" => Auth::user()->name,"empresa" => $request["nombre"],"direccion" => $request["domicilio"],"cantidad" => $contador,"id_servicio" => $id,"tipo" => "nuevo"];
             Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Servicio Creado",$data,"service"));
+
 
             return redirect()->back()->with(['message' => "Se Guardo correctamente el Servicio", 'color' => 'success']);
             //echo "seguardo";
@@ -98,7 +107,9 @@ class ServicesController extends Controller
 
             DB::table("servicio_vehiculo")->where("id_servicio",$request["id_servicio_edit"])->delete();
 
+
             $contador=0;
+
             for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
 
                 DB::table("servicio_vehiculo")->insert([
@@ -115,11 +126,13 @@ class ServicesController extends Controller
                     "no_mantenimientos"=>$request["no_mantenimientos".$i],
                     "observaciones"=>$request["observaciones".$i],
                 ]);
+
                 $contador++;
             }
 
             $data =["usuario" => Auth::user()->name,"empresa" => $request["nombre"],"direccion" => $request["domicilio"],"cantidad" => $contador,"id_servicio" => $request["id_servicio_edit"],"tipo" => "actualizar"];
             Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Servicio Actualizado",$data,"service"));
+
 
             return redirect()->back()->with(['message' => "Se Actualizo correctamente el Servicio", 'color' => 'warning']);
             //echo "seguardo";
@@ -134,11 +147,15 @@ class ServicesController extends Controller
         try {
 
             if ($request["id_servicio_edit"]!=0) {
+
                 $service_data=DB::table("servicios")->where("id",$request["id_servicio_edit"])->first();
                 DB::table("servicios")->where("id",$request["id_servicio_edit"])->delete();
 
                 $data =["usuario" => Auth::user()->name,"empresa" => $service_data->nombre,"direccion" => $service_data->domicilio,"cantidad" => "0","id_servicio" => $service_data->id,"tipo" => "eliminar"];
                 Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Servicio Eliminado",$data,"service"));
+
+                DB::table("servicios")->where("id",$request["id_servicio_edit"])->delete();
+
             }
             
             return redirect()->back()->with(['message' => "Se Elimino correctamente el Servicio", 'color' => 'danger']);
@@ -157,11 +174,15 @@ class ServicesController extends Controller
 
         $pdf = PDF::loadView('Services.pdf_services',compact("datos","servicio_vehiculos"))->setPaper(array(0,0,1186,1536));
         //$nombre_pdf="Matriz Master_".$proyectos->nombre.".pdf";
+
         return $pdf->stream("folio_CMZ-".$id.".pdf");
     }
     public function envio(){
 
         $data =["usuario" => Auth::user()->name,"empresa" => "nombre empresa","direccion" => "direccion","cantidad" => "numero","id_servicio" => "1","tipo" => "actualizar"];
         Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Servicio Creado",$data,"service"));
+
+        return $pdf->stream("prueba.pdf");
+
     }
 }

@@ -14,8 +14,12 @@
         "laravel/jetstream": "^2.8",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+<<<<<<< HEAD
         "livewire/livewire": "^2.5",
         "s-ichikawa/laravel-sendgrid-driver": "3.0.4"
+=======
+        "livewire/livewire": "^2.5"
+>>>>>>> 415bd2ac7a47c5a45fe4a7c825afa46b3fc4040f
     },
     "require-dev": {
         "facade/ignition": "^2.5",

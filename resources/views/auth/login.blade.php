@@ -6,7 +6,11 @@
 
     <div class="container-fluid fixed-top " style="background-color: #000000; height: 12%; padding-right: 0px; padding-left: 0px;">
         
+
             <img src="{{url('/imagenes/logonuevoB.png')}}" style="width: auto; height: 90%; margin-left: 15px;">
+
+            <img src="/imagenes/logonuevoB.png" style="width: auto; height: 90%; margin-left: 15px;">
+
         
         <div class="col-12">
             <div style="position: absolute; text-align: right; margin-top: -50px; padding-right: 15px; width: 100%;">
@@ -38,7 +42,9 @@
                     <x-jet-label value="{{ __('CORREO') }}" />
 
                     <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
+
                                  name="email" :value="old('email')" required placeholder="CORREO" id="correo" onchange="activar_button();" onkeyup="activar_button();" onclick="activar_button();"/>
+
                     <x-jet-input-error for="email"></x-jet-input-error>
                 </div>
 
@@ -46,7 +52,9 @@
                     <x-jet-label value="{{ __('CONTRASEÑA') }}" />
 
                     <x-jet-input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password"
+
                                  name="password" required autocomplete="current-password" placeholder="CONTRASEÑA" id="contrasena" onkeyup="activar_button();" onchange="activar_button();" onclick="activar_button();"/>
+
                     <x-jet-input-error for="password"></x-jet-input-error>
                 </div>
 

@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
+
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MessageSent;
 //esta es para poder acceder a los datos del usuario
 use Illuminate\Support\Facades\Auth;
+
+
 class CatalogosController extends Controller
 {
     public function __construct(){
@@ -35,8 +38,10 @@ class CatalogosController extends Controller
             ]);
 
 
+
             $data =["usuario" => Auth::user()->name,"matricula" => $request["matricula"],"nombre" => $request["nombre"],"tipo" => "nuevo","funcion" => $request["funcion"]];
             Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Nuevo Registro en Catalogos",$data,"catalogos"));
+
             
             return redirect()->back()->with(['message' => "Se Guardo correctamente el Vehiculo", 'color' => 'success']);
 
@@ -56,8 +61,10 @@ class CatalogosController extends Controller
                 "funcion"=>$request["funcion"],
             ]);
 
+
             $data =["usuario" => Auth::user()->name,"matricula" => $request["matricula"],"nombre" => $request["nombre"],"tipo" => "actualizar","funcion" => $request["funcion"]];
             Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Registro Actualizado en Catalogos",$data,"catalogos"));
+
             
             return redirect()->back()->with(['message' => "Se Actualizo correctamente el Vehiculo", 'color' => 'warning']);
 
@@ -72,11 +79,15 @@ class CatalogosController extends Controller
 
             if ($request["id_vehiculo_edit"]!=0) {
 
+
                 $vehiculo=DB::table("vehiculos")->where("id",$request["id_vehiculo_edit"])->first();
                 DB::table("vehiculos")->where("id",$request["id_vehiculo_edit"])->delete();
 
                 $data =["usuario" => Auth::user()->name,"matricula" => $vehiculo->matricula,"nombre" => $vehiculo->nombre,"tipo" => "eliminar","funcion" => $vehiculo->funcion];
                 Mail::to("nuckelavee95@gmail.com")->send(new MessageSent("Registro Actualizado en Catalogos",$data,"catalogos"));
+
+                DB::table("vehiculos")->where("id",$request["id_vehiculo_edit"])->delete();
+
             }
             
             return redirect()->back()->with(['message' => "Se Elimino correctamente el Vehiculo", 'color' => 'danger']);

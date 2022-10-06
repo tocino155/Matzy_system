@@ -33,7 +33,6 @@
     .visible_off{
         display: none;
     }
-
     .paginate_button{
 
         position: sticky;
@@ -348,7 +347,7 @@
         Editar
     </button>
 
-    <button class="btn btn-info" style="margin-bottom: 10px; font-weight: bold; width: 100%;" data-toggle="modal" data-target="#pdf" onclick="agregar_url();" >
+    <button class="btn btn-info" style="margin-bottom: 10px; font-weight: bold; width: 100%;" data-toggle="modal" data-target="#pdf" onclick="document.getElementById('visor_pdf').src='/PDF_servicio/'+id_servicio;" >
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
         </svg>
@@ -539,7 +538,7 @@
   </div>
 </div>
 
-<!-- modal de pdf-->
+<!-- modal de eliminar usuario-->
 <div class="modal fade" id="pdf" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
@@ -556,7 +555,7 @@
 
             <div class="col-md-12" style="text-align: center;display: none;" id="no_se_mira">
                 <p>UPss! &nbsp;&nbsp; !CREO QUE NO SE VE BIEN EL PDF; VAMOS A OTRA PAGINA OK!</p>
-                <a class="btn btn-success" target="_blank" href="" id="ir_otro_lado">¡VAMOS! <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a>
+                <a class="btn btn-success" target="_blank" href="{{url('/Visor_PDF')}}">¡VAMOS! <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a>
             </div>
             <embed type="application/pdf" src="" style="width:100%; height: 600px;" id="visor_pdf">
             
@@ -594,12 +593,6 @@
             }
         });
     });
-
-    function agregar_url() {
-         var url_server = "{{url('/PDF_servicio')}}"+"/";
-         document.getElementById('visor_pdf').src=url_server+id_servicio;
-         document.getElementById("ir_otro_lado").href=url_server+id_servicio;
-    }
 
     
     function activar_envio(){
@@ -1021,86 +1014,86 @@
     var contador=0;
     function agregar_prueba(){
 
-        if(j>0){
+            if(j>0){
 
-            $("#contenedor_padre").append(
+                $("#contenedor_padre").append(
 
-                '<div id="contenedor_hijo'+j+'">'+
-                    
-                    '<div class="row">'+
-                        '<div class="col-md-12" style="margin-bottom: 10px;">'+
-                            '<label style="color: #888888;">Datos del Vehiculo</label>'+
-                        '</div>'+
-                    '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Matricula del Vehiculo</label>'+
-                            '<select name="id_vehiculo'+j+'" class="form-control" id="id_vehiculo'+j+'" onchange="activar_envio(); pasar_datos_vehiculo(this.value,'+j+');" required>'+
-                                '<option value="" disabled selected>.:Selecciona:.</option>'+
-                                '@foreach($vehiculos as $vehiculo)'+
-                                '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
-                                '@endforeach'+
-                            '</select>'+
-                        '</div>'+
+                    '<div id="contenedor_hijo'+j+'">'+
+                        
+                        '<div class="row">'+
+                            '<div class="col-md-12" style="margin-bottom: 10px;">'+
+                                '<label style="color: #888888;">Datos del Vehiculo</label>'+
+                            '</div>'+
                         '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Nombre</label>'+
-                            '<input type="text" name="nombre_vehiculo'+j+'" id="nombre_vehiculo'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
+                                '<label>Matricula del Vehiculo</label>'+
+                                '<select name="id_vehiculo'+j+'" class="form-control" id="id_vehiculo'+j+'" onchange="activar_envio(); pasar_datos_vehiculo(this.value,'+j+');" required>'+
+                                    '<option value="" disabled selected>.:Selecciona:.</option>'+
+                                    '@foreach($vehiculos as $vehiculo)'+
+                                    '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
+                                    '@endforeach'+
+                                '</select>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Nombre</label>'+
+                                '<input type="text" name="nombre_vehiculo'+j+'" id="nombre_vehiculo'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Funcion</label>'+
+                                '<input type="text" name="funcion'+j+'" id="funcion'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label></label><br>'+
+                                '<button type="button" class="btn btn-danger eliminar_hijo" style="margin-top: 8px; width: 100%;" id="'+j+'"> eliminar </button>'+
+                            '</div>'+
                         '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Funcion</label>'+
-                            '<input type="text" name="funcion'+j+'" id="funcion'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
-                        '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label></label><br>'+
-                            '<button type="button" class="btn btn-danger eliminar_hijo" style="margin-top: 8px; width: 100%;" id="'+j+'"> eliminar </button>'+
-                        '</div>'+
-                    '</div>'+
 
-                    '<div class="row">'+
-                        '<div class="col-md-12" style="margin-bottom: 10px;">'+
-                            '<label style="color: #888888;">Datos del Servicio</label>'+
+                        '<div class="row">'+
+                            '<div class="col-md-12" style="margin-bottom: 10px;">'+
+                                '<label style="color: #888888;">Datos del Servicio</label>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Matricula del Vehiculo</label>'+
+                                '<input type="text" name="matricula'+j+'" id="matricula'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Fecha de inicio</label>'+
+                                '<input type="date" name="fecha_inicio'+j+'" id="fecha_inicio'+j+'" class="form-control" onchange="activar_envio(); diferecia_dias('+j+');" required>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Fecha de Termino</label>'+
+                                '<input type="date" name="fecha_termino'+j+'" id="fecha_termino'+j+'" class="form-control" onchange="activar_envio(); diferecia_dias('+j+');" required>'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Horas de Trabajo</label>'+
+                                '<input type="text" name="horas_trabajo'+j+'" id="horas_trabajo'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
+                            '</div>'+
                         '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Matricula del Vehiculo</label>'+
-                            '<input type="text" name="matricula'+j+'" id="matricula'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
+                        '<div class="row">'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>Mant. después de (Hrs)</label>'+
+                                '<input type="number" name="mat_horas'+j+'" id="mat_horas'+j+'" class="form-control" onkeyup="activar_envio(); mantenimiento_horas('+j+');" onchange="activar_envio(); mantenimiento_horas('+j+');" required min="1">'+
+                            '</div>'+
+                            '<div class="col-md-3" style="margin-bottom: 10px;">'+
+                                '<label>No. Mantenimientos</label>'+
+                                '<input type="text" name="no_mantenimientos'+j+'" id="no_mantenimientos'+j+'" class="form-control" onchange="activar_envio();" required readonly>'+ 
+                            '</div>'+
+                            '<div class="col-md-6" style="margin-bottom: 10px;">'+
+                                '<label>Observacines</label>'+
+                                '<textarea name="observaciones'+j+'" id="observaciones'+j+'" class="form-control" rows="1" onkeyup="activar_envio();" ></textarea>'+
+                            '</div>'+
                         '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Fecha de inicio</label>'+
-                            '<input type="date" name="fecha_inicio'+j+'" id="fecha_inicio'+j+'" class="form-control" onchange="activar_envio(); diferecia_dias('+j+');" required>'+
-                        '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Fecha de Termino</label>'+
-                            '<input type="date" name="fecha_termino'+j+'" id="fecha_termino'+j+'" class="form-control" onchange="activar_envio(); diferecia_dias('+j+');" required>'+
-                        '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Horas de Trabajo</label>'+
-                            '<input type="text" name="horas_trabajo'+j+'" id="horas_trabajo'+j+'" class="form-control" onkeyup="activar_envio();" required readonly>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>Mant. después de (Hrs)</label>'+
-                            '<input type="number" name="mat_horas'+j+'" id="mat_horas'+j+'" class="form-control" onkeyup="activar_envio(); mantenimiento_horas('+j+');" onchange="activar_envio(); mantenimiento_horas('+j+');" required min="1">'+
-                        '</div>'+
-                        '<div class="col-md-3" style="margin-bottom: 10px;">'+
-                            '<label>No. Mantenimientos</label>'+
-                            '<input type="text" name="no_mantenimientos'+j+'" id="no_mantenimientos'+j+'" class="form-control" onchange="activar_envio();" required readonly>'+ 
-                        '</div>'+
-                        '<div class="col-md-6" style="margin-bottom: 10px;">'+
-                            '<label>Observacines</label>'+
-                            '<textarea name="observaciones'+j+'" id="observaciones'+j+'" class="form-control" rows="1" onkeyup="activar_envio();" ></textarea>'+
-                        '</div>'+
-                    '</div>'+
 
-                '</div>'
+                    '</div>'
 
 
-            );
-            j++;
-            contador++;
+                );
+                j++;
+                contador++;
 
-        }
-        //console.log(contador);
-        document.getElementById("cantidad_vehiculos").value=contador;
-        activar_envio();
+            }
+            //console.log(contador);
+            document.getElementById("cantidad_vehiculos").value=contador;
+            activar_envio();
     }
 
     var j_2=1;

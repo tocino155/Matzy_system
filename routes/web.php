@@ -6,7 +6,9 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SearchesController;
 use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\ServicesController;
+
 use App\Http\Controllers\FinanceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,7 @@ Route::get('/Servicios',[ServicesController::class,'view_services'])->name('serv
 Route::post('/guardar_servicio',[ServicesController::class,'agregar_service'])->name('agregar_service');
 Route::post('/Actualizar_servicio',[ServicesController::class,'actualizar_service'])->name('actualizar_service');
 Route::delete('/Eliminar_servicio',[ServicesController::class,'eliminar_service'])->name('eliminar_service');
+
 Route::get('/PDF_servicio/{id}',[ServicesController::class,'pdf_service'])->name('pdf_service');
 Route::get('/envio',[ServicesController::class,'envio'])->name('envio');
 
@@ -59,3 +62,6 @@ Route::post('/dar_alta_finanza',[FinanceController::class,'dar_alta_finanza'])->
 Route::post('/Agregar_cantidad',[FinanceController::class,'agregar_presupuesto'])->name('agregar_presupuesto');
 Route::delete('/Eliminar_finance',[FinanceController::class,'eliminar_finance'])->name('eliminar_finance');
 Route::get('/PDF_finance/{id}',[FinanceController::class,'pdf_finance'])->name('pdf_finance');
+
+Route::get('/PDF_servicio/{id}',[ServicesController::class,'pdf_service'])->name('pdf_service');
+

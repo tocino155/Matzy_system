@@ -359,7 +359,9 @@ return [
         [
             'text'    => 'Finanzas',
             'icon'    => 'nav-icon fas fa-fw fa-credit-card',
+
             'url'  => '/Finanzas',
+
             /*
             'submenu' => [
                 [

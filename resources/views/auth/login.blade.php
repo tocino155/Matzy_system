@@ -9,8 +9,6 @@
 
             <img src="{{url('/imagenes/logonuevoB.png')}}" style="width: auto; height: 90%; margin-left: 15px;">
 
-            <img src="/imagenes/logonuevoB.png" style="width: auto; height: 90%; margin-left: 15px;">
-
         
         <div class="col-12">
             <div style="position: absolute; text-align: right; margin-top: -50px; padding-right: 15px; width: 100%;">

@@ -33,6 +33,10 @@
     .visible_off{
         display: none;
     }
+    .paginate_button{
+
+        position: sticky;
+    }
 
 </style>
 

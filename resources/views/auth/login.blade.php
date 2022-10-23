@@ -57,7 +57,7 @@
                 </div>
 
 
-                <div class="" style="text-align: center;">
+                <div class="" style="text-align: center; margin-top: 30px;">
 
                     <button class="btn" id="butt" style="width: 100%;">
                         ENTRAR

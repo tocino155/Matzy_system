@@ -21,11 +21,44 @@ class ServicesController extends Controller
 
     public function view_services(){
 
-        $vehiculos=DB::table("vehiculos")->select("*")->get();
-        $ultimo_id=DB::table("servicios")->latest('id')->first();
+        date_default_timezone_set('America/Mexico_City');
         $services=DB::table("servicios")->select("*")->get();
+        $ultimo_id=DB::table("servicios")->latest('id')->first();
         $servicio_vehiculos=DB::table("servicio_vehiculo")->select("*")->get();
-        return view('Services.services',compact("vehiculos","ultimo_id","services","servicio_vehiculos"));
+        $i=0;
+        $filtro_ocupadas=null;
+        foreach ($servicio_vehiculos as $contador) {
+            $filtro_ocupadas[$i]=$contador->id_vehiculo;
+            $i++;
+        }
+
+       
+        $vehiculos=null;
+        if ($filtro_ocupadas==null) {
+            $vehiculos=DB::table("vehiculos")->select("*")->get();
+            $vehiculos_servicio_activo=null;
+        }else{
+             $vehiculos=DB::table("vehiculos")->whereNotIn("id",$filtro_ocupadas)->get();
+             $vehiculos_servicio_activo=DB::table("servicio_vehiculo_registro")->whereIn("id_vehiculo",$filtro_ocupadas)->whereDate("fecha_fin","<",date("Y-m-d"))->get();
+        }
+
+        
+
+        /*foreach ($filtro_ocupadas as $ff) {
+            echo $ff."<br>";
+        }
+        echo "<br>";
+        foreach ($vehiculos as $rr) {
+            echo $rr->id."<br>";
+        }
+        echo "<br>";
+        foreach ($vehiculos_servicio_activo as $gg) {
+            echo $gg->id_vehiculo."<br>";
+        }
+        echo "<br>";
+        */
+        
+        return view('Services.services',compact("vehiculos","ultimo_id","services","vehiculos_servicio_activo","filtro_ocupadas","servicio_vehiculos"));
     }
 
     public function agregar_service(Request $request){
@@ -52,6 +85,18 @@ class ServicesController extends Controller
             $id = DB::getPdo()->lastInsertId();
 
             $contador=0;
+            //este es para que se cambie y se agregue como nuevo
+            for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
+
+                $existente=DB::table("servicio_vehiculo")->where("id_vehiculo",$request['id_vehiculo'.$i])->first();
+                if ($existente != null) {
+                    DB::table("servicio_vehiculo_registro")->where("id_vehiculo",$request["id_vehiculo".$i])->delete();
+                    DB::table("servicio_vehiculo")->where("id_vehiculo",$request['id_vehiculo'.$i])->update([
+                        "salio" => "este vehiculo ya fue elejido en otro servicio por que ya termino su fecha en este",
+                    ]);
+                }
+            }
+
 
             for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
 
@@ -71,6 +116,20 @@ class ServicesController extends Controller
                 ]);
 
                 $contador++;
+            }
+
+            for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
+
+                DB::table("servicio_vehiculo_registro")->insert([
+
+                    "id_servicio"=>$id,
+                    "id_vehiculo"=>$request["id_vehiculo".$i],
+                    "nombre_vehiculo"=>$request["nombre_vehiculo".$i],
+                    "matricula_vehiculo"=>$request["matricula".$i],
+                    "fecha_inicio"=>$request["fecha_inicio".$i],
+                    "fecha_fin"=>$request["fecha_termino".$i],
+                ]);
+
             }
 
             $data =["usuario" => Auth::user()->name,"empresa" => $request["nombre"],"direccion" => $request["domicilio"],"cantidad" => $contador,"id_servicio" => $id,"tipo" => "nuevo"];
@@ -107,8 +166,20 @@ class ServicesController extends Controller
 
             DB::table("servicio_vehiculo")->where("id_servicio",$request["id_servicio_edit"])->delete();
 
+            DB::table("servicio_vehiculo_registro")->where("id_servicio",$request["id_servicio_edit"])->delete();
+
 
             $contador=0;
+            for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
+
+                $existente=DB::table("servicio_vehiculo")->where("id_vehiculo",$request['id_vehiculo'.$i])->first();
+                if ($existente != null) {
+                    DB::table("servicio_vehiculo_registro")->where("id_vehiculo",$request["id_vehiculo".$i])->delete();
+                    DB::table("servicio_vehiculo")->where("id_vehiculo",$request['id_vehiculo'.$i])->update([
+                        "salio" => "este vehiculo ya fue elejido en otro servicio por que ya termino su fecha en este",
+                    ]);
+                }
+            }
 
             for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
 
@@ -128,6 +199,19 @@ class ServicesController extends Controller
                 ]);
 
                 $contador++;
+            }
+
+            for ($i=0;$i<=$request['cantidad_vehiculos'];$i++) {
+
+                DB::table("servicio_vehiculo_registro")->insert([
+                    "id_servicio"=>$request["id_servicio_edit"],
+                    "id_vehiculo"=>$request["id_vehiculo".$i],
+                    "nombre_vehiculo"=>$request["nombre_vehiculo".$i],
+                    "matricula_vehiculo"=>$request["matricula".$i],
+                    "fecha_inicio"=>$request["fecha_inicio".$i],
+                    "fecha_fin"=>$request["fecha_termino".$i],
+                ]);
+
             }
 
             $data =["usuario" => Auth::user()->name,"empresa" => $request["nombre"],"direccion" => $request["domicilio"],"cantidad" => $contador,"id_servicio" => $request["id_servicio_edit"],"tipo" => "actualizar"];

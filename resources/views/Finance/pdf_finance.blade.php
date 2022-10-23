@@ -122,7 +122,7 @@
           </tr>
           <tr style="font-weight: 0; ">
             <td style="font-size: 30px; width: 50px;" ></td>
-            <td style="font-size: 30px; text-align: center;" >Cantidas</td>
+            <td style="font-size: 30px; text-align: center;" >Cantidades</td>
             <td style="font-size: 30px; text-align: center;" >Concepto</td>
             <td style="font-size: 30px; text-align: center;" >Observaciones</td>
             <td style="font-size: 30px; width: 50px;" ></td>
@@ -150,7 +150,7 @@
           </tr>
           <tr style="font-weight: 0; ">
             <td style="font-size: 30px; width: 50px;" ></td>
-            <td style="font-size: 30px; text-align: center;" >Cantidas</td>
+            <td style="font-size: 30px; text-align: center;" >Cantidades</td>
             <td style="font-size: 30px; text-align: center;" >Concepto</td>
             <td style="font-size: 30px; text-align: center;" >Observaciones</td>
             <td style="font-size: 30px; width: 50px;" ></td>
@@ -160,7 +160,7 @@
           @if($finanza->tipo=="egreso")
           <tr style="font-weight: 0; ">
             <td style="font-size: 30px; width: 50px;" ></td>
-            <td style="font-size: 30px; text-align: center; border: black 1px solid;" >{{$finanza->cantidad}}</td>
+            <td style="font-size: 30px; text-align: center; border: black 1px solid;" >${{$finanza->cantidad}}</td>
             <td style="font-size: 30px; text-align: center; border: black 1px solid;" >{{$finanza->concepto}}</td>
             <td style="font-size: 30px; text-align: center; border: black 1px solid;" >{{$finanza->observaciones}}</td>
             <td style="font-size: 30px; width: 50px;" ></td>
@@ -197,7 +197,7 @@
         </tbody>
     </table>
 
-    <p style=" margin-top: 55px;  padding-left: 50px; position: absolute; font-size: 30px;"><br>Observaciones generales del servicio: <br>{{$servicio_vehiculo->observaciones}}</p>
+    <p style=" margin-top: 55px;  padding-left: 50px; position: absolute; font-size: 30px;"><br>Observaciones generales del servicio: <br>{{$datos->observaciones}}</p>
 
 </header>
 

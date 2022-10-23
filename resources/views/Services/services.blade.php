@@ -159,10 +159,38 @@
                             {{$service->nombre}}
                         </td>
                         <td style="text-align: center;">
-                            ---
+                            <?php $fecha_menor=null; $x=0;?>
+                            @foreach($servicio_vehiculos as $servicio_vehiculo)
+                            
+                            @if($servicio_vehiculo->id_servicio==$service->id)
+                            @if($x==0)
+                            <?php $fecha_i=$servicio_vehiculo->fecha_inicio; ?>
+                            @endif
+                            @if(strtotime($servicio_vehiculo->fecha_inicio) <= strtotime($fecha_i))
+                            <?php $fecha_menor=$servicio_vehiculo->fecha_inicio;?>
+                            @endif
+                            <?php $x++; ?>
+                            @endif
+                            
+                            @endforeach
+                            {{$fecha_menor}}
                         </td>
                         <td style="text-align: center;">
-                            ---
+                            <?php $fecha_max=null; $x=0;?>
+                            @foreach($servicio_vehiculos as $servicio_vehiculo)
+                            
+                            @if($servicio_vehiculo->id_servicio==$service->id)
+                            @if($x==0)
+                            <?php $fecha_f=$servicio_vehiculo->fecha_fin; ?>
+                            @endif
+                            @if(strtotime($servicio_vehiculo->fecha_fin) >= strtotime($fecha_f))
+                            <?php $fecha_max=$servicio_vehiculo->fecha_fin;?>
+                            @endif
+                            <?php $x++; ?>
+                            @endif
+                            
+                            @endforeach
+                            {{$fecha_max}}
                         </td>
                         <td style="text-align: center;">
                             espera
@@ -247,11 +275,17 @@
                     </div>
                     <div class="col-md-3" style="margin-bottom: 10px;">
                         <label>Matricula del Vehiculo</label>
-                        <select name="id_vehiculo0" class="form-control" id="id_vehiculo0" onchange="activar_envio(); pasar_datos_vehiculo(this.value,0);" required>
+                        <select name="id_vehiculo0" class="form-control" id="id_vehiculo0" onchange="activar_envio(); pasar_datos_vehiculo(this,0);" required>
                             <option value="" disabled selected>.:Selecciona:.</option>
                             @foreach($vehiculos as $vehiculo)
                             <option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>
                             @endforeach
+
+                            @if($vehiculos_servicio_activo != null)
+                            @foreach($vehiculos_servicio_activo as $vehiculo_servicio_activo)
+                            <option value="{{$vehiculo_servicio_activo->id_vehiculo}}">{{$vehiculo_servicio_activo->matricula_vehiculo}} - fecha terminada</option>
+                            @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="col-md-3" style="margin-bottom: 10px;">
@@ -421,14 +455,12 @@
                     <div class="col-md-12" style="margin-bottom: 10px;">
                         <label style="color: #888888;">Datos del Vehiculo</label>
                     </div>
+                    <div id="texto_salio0" class="col-md-12"></div><br>
                     <div class="col-md-3" style="margin-bottom: 10px;">
                         <label>Matricula del Vehiculo</label>
-                        <select name="id_vehiculo0" class="form-control" id="id_vehiculo_edit0" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this.value,0);" required>
+                        <select name="id_vehiculo0" class="form-control" id="id_vehiculo_edit0" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this,0);" required>
 
                             <option value="" disabled selected>.:Selecciona:.</option>
-                            @foreach($vehiculos as $vehiculo)
-                            <option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>
-                            @endforeach
 
                         </select>
                     </div>
@@ -637,7 +669,9 @@
 
         if (document.getElementById("nombre_edit").value!=""&& document.getElementById("cp_edit").value!=""&& document.getElementById("estado_edit").value!=""&& document.getElementById("colonia_edit").value!=""&& document.getElementById("domicilio_edit").value!=""&& document.getElementById("telefono_edit").value!=""&& document.getElementById("correo_edit").value!="") {
 
+
             for (var i = 0; i < j_2; i++) {
+
                 try{
 
                     if (document.getElementById("id_vehiculo_edit"+i).value!="" && document.getElementById("nombre_vehiculo_edit"+i).value!=""&& document.getElementById("funcion_edit"+i).value!="" && document.getElementById("matricula_edit"+i).value!="" && document.getElementById("fecha_inicio_edit"+i).value!="" && document.getElementById("fecha_termino_edit"+i).value!="" && document.getElementById("horas_trabajo_edit"+i).value>0 && document.getElementById("mat_horas_edit"+i).value>0 && document.getElementById("no_mantenimientos_edit"+i).value>0) {
@@ -684,12 +718,84 @@
         menu_opciones.classList.remove("visible_on");
         menu_opciones.classList.add("visible_off");
     }
+    function llenar_select(data_service,indicemax){
+
+        var indice_select=(indicemax-1);
+        var datos_servicio_pasado=data_service;
+        console.log(data_service);
+        console.log(indicemax);
+        for (var t = 0; t <= indice_select; t++) {
+            $("#id_vehiculo_edit"+t).empty();
+        //console.log(j);
+            $("#id_vehiculo_edit"+t).append('<option value="" disabled selected>.:Selecciona:.</option>');
+        }
+        $.ajax({
+          url: "{{url('/get_vehiculos_filtrados_edit')}}"+"/"+id_servicio,
+          dataType: "json",
+          //context: document.body
+        }).done(function(vehiculos_filtrado_edit) {
+            console.log(vehiculos_filtrado_edit);
+            console.log("hola");
+            if(vehiculos_filtrado_edit!=null){
+
+                for (var t = 0; t <= indice_select; t++) {
+
+                    //vehiculos sin usar 
+                    if(vehiculos_filtrado_edit[0] !=null){
+                        for(var i=0;i<vehiculos_filtrado_edit[0].length;i++){
+                                        
+                            $("#id_vehiculo_edit"+t).append('<option value="'+vehiculos_filtrado_edit[0][i].id+'">'+vehiculos_filtrado_edit[0][i].matricula+'</option>');            
+                        }
+                    }
+                    //vehiculos con fecha terminada
+                    if(vehiculos_filtrado_edit[1] !=null){
+
+                        for(var i=0;i<vehiculos_filtrado_edit[1].length;i++){
+                                    
+                            $("#id_vehiculo_edit"+t).append('<option value="'+vehiculos_filtrado_edit[1][i].id+'">'+vehiculos_filtrado_edit[1][i].matricula+' - fecha terminada</option>');            
+                                      
+                        }
+
+                    }
+                    
+                    if(vehiculos_filtrado_edit[2] != null){
+                        for(var i=0;i<vehiculos_filtrado_edit[2].length;i++){
+                                        
+                            $("#id_vehiculo_edit"+t).append('<option value="'+vehiculos_filtrado_edit[2][i].id_vehiculo+'">'+vehiculos_filtrado_edit[2][i].matricula_vehiculo+' - p</option>');
+                                        
+                                      
+                        }
+                    }
+
+                    console.log("valor del for"+t);
+                    
+                }
+
+                for (var i = 0; i <= indice_select; i++) {
+                    console.log("id_vehiculo_edit"+i);
+                    $("#id_vehiculo_edit"+i).val(datos_servicio_pasado[i].id_vehiculo);
+                    
+                    
+                }
+
+                
+                
+                //console.log(vehiculos_filtrado[0]);
+                //console.log(vehiculos_filtrado[1]);
+                    
+            }
+        });
+
+    }
 
     function editar_registro(){
         $("#colonia_edit").empty();
         $("#contenedor_padre_edit").empty();
         $("#observaciones_edit_edit").empty();
         j_2=1;
+        var id_seleccion_vehiculo=0;
+        var id_seleccion_vehiculo_2=0;
+        var valor;
         contador_2=0;
         $.ajax({
           url: "{{url('/get_servicios')}}"+'/'+id_servicio,
@@ -708,7 +814,6 @@
                 document.getElementById("id_servicio_edit").value=null;
                 $("#observaciones_edit_edit").empty();
             }else{
-
                 document.getElementById("folio_edit").value="CMZ-"+service_data.id;
                 document.getElementById("nombre_edit").value=service_data.nombre;
                 document.getElementById("cp_edit").value=service_data.cp;
@@ -735,8 +840,14 @@
                         
                         for(var i=0;i<servicio_vehiculos_data.length;i++){
 
-                            if(i==0){
+                            id_seleccion_vehiculo=servicio_vehiculos_data[i].id_vehiculo;
 
+                            if(i==0){
+                                if (servicio_vehiculos_data[i].salio != null){
+                                    document.getElementById("texto_salio0").innerHTML="este vehiculo ya fue elejido en otro servicio por que ya termino su fecha en este";
+                                }else{
+                                    document.getElementById("texto_salio0").innerHTML=null;
+                                }
                                 document.getElementById("nombre_vehiculo_edit0").value=servicio_vehiculos_data[i].nombre_vehiculo;
                                 document.getElementById("id_vehiculo_edit0").value=servicio_vehiculos_data[i].id_vehiculo;
                                 document.getElementById("funcion_edit0").value=servicio_vehiculos_data[i].funcion_vehiculo;
@@ -760,13 +871,11 @@
                                                 '<div class="col-md-12" style="margin-bottom: 10px;">'+
                                                     '<label style="color: #888888;">Datos del Vehiculo</label>'+
                                                 '</div>'+
+                                                '<div id="texto_salio0" class="col-md-12">'+servicio_vehiculos_data[i].salio+'</div><br>'+
                                             '<div class="col-md-3" style="margin-bottom: 10px;">'+
                                                     '<label>Matricula del Vehiculo</label>'+
-                                                    '<select name="id_vehiculo'+j_2+'" class="form-control" id="id_vehiculo_edit'+j_2+'" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this.value,'+j_2+');" required>'+
-                                                        '<option value="" disabled >.:Selecciona:.</option>'+
-                                                        '@foreach($vehiculos as $vehiculo)'+
-                                                        '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
-                                                        '@endforeach'+
+                                                    '<select name="id_vehiculo'+j_2+'" class="form-control" id="id_vehiculo_edit'+j_2+'" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this,'+j_2+');" required>'+
+                                                        
                                                     '</select>'+
                                                 '</div>'+
                                                 '<div class="col-md-3" style="margin-bottom: 10px;">'+
@@ -822,29 +931,32 @@
                                         '</div>'
 
                                     );
-                                    document.getElementById("id_vehiculo_edit"+j_2).value=servicio_vehiculos_data[i].id_vehiculo;
+                                    //document.getElementById("id_vehiculo_edit"+j_2).value=servicio_vehiculos_data[i].id_vehiculo;
                                     j_2++;
                                     contador_2++;
 
                                 }
 
                             }
-
-
                             
                             //console.log(contador);
                             document.getElementById("cantidad_vehiculos_edit").value=contador_2;
-                            activar_envio_2();
+                            
 
 
                         }
 
+                        ///////
+                        
+                        llenar_select(servicio_vehiculos_data,j_2);
+                        
                     }
 
                 });
             }
 
         });
+        activar_envio_2();
 
     }
 
@@ -915,44 +1027,109 @@
 
     }
 
-    function pasar_datos_vehiculo(id_vehiculo_select,indice){
-
+    function pasar_datos_vehiculo(select,indice){
+        var igual=false;
         $.ajax({
-          url: "{{url('/get_vehiculo')}}"+'/'+id_vehiculo_select,
+          url: "{{url('/get_vehiculo')}}"+'/'+select.value,
           dataType: "json",
           //context: document.body
         }).done(function(vehiculo_data) {
+
+            try{
+
+                for (var n = 0; n < j; n++) {
+                    var id_comprueba="id_vehiculo"+n;
+                    if(document.getElementById("id_vehiculo"+n).value == select.value && id_comprueba != select.id){
+                        select.value=null;
+                        document.getElementById("nombre_vehiculo"+indice).value=null;
+                        document.getElementById("funcion"+indice).value=null;
+                        document.getElementById("matricula"+indice).value=null;
+                        document.getElementById("fecha_inicio"+indice).value=null;
+                        document.getElementById("fecha_termino"+indice).value=null;
+                        document.getElementById("horas_trabajo"+indice).value=null;
+                        document.getElementById("mat_horas"+indice).value=null;
+                        document.getElementById("no_mantenimientos"+indice).value=null;
+                        document.getElementById("observaciones"+indice).value=null;
+                        console.log("son iguales"+indice);
+                        alert("Ya elegiste este vehiculo");
+                        igual = true;
+                        break;
+                    }else{
+                        console.log("son diferentes");
+                        igual= false;
+                    }
+                }
+
+            }catch (TypeError) {
+                console.log("no existe ese objeto con ese nombre");
+            }
 
             if(vehiculo_data==null){
                 document.getElementById("nombre_vehiculo"+indice).value=null;
                 document.getElementById("funcion"+indice).value=null;
                 document.getElementById("matricula"+indice).value=null;
             }else{
-                document.getElementById("nombre_vehiculo"+indice).value=vehiculo_data.nombre;
-                document.getElementById("funcion"+indice).value=vehiculo_data.funcion;
-                document.getElementById("matricula"+indice).value=vehiculo_data.matricula;
+                if (igual==false){
+                    document.getElementById("nombre_vehiculo"+indice).value=vehiculo_data.nombre;
+                    document.getElementById("funcion"+indice).value=vehiculo_data.funcion;
+                    document.getElementById("matricula"+indice).value=vehiculo_data.matricula;
+                }
+                
             }
+
+            
 
         });
 
     }
 
-    function pasar_datos_vehiculo_2(id_vehiculo_select,indice){
-
+    function pasar_datos_vehiculo_2(select,indice){
+        var igual=false;
         $.ajax({
-          url: "{{url('/get_vehiculo')}}"+'/'+id_vehiculo_select,
+          url: "{{url('/get_vehiculo')}}"+'/'+select.value,
           dataType: "json",
           //context: document.body
         }).done(function(vehiculo_data) {
+
+            try{
+
+                for (var n = 0; n < j_2; n++) {
+                    var id_comprueba="id_vehiculo_edit"+n;
+                    if(document.getElementById("id_vehiculo_edit"+n).value == select.value && id_comprueba != select.id){
+                        select.value=null;
+                        document.getElementById("nombre_vehiculo_edit"+indice).value=null;
+                        document.getElementById("funcion_edit"+indice).value=null;
+                        document.getElementById("matricula_edit"+indice).value=null;
+                        document.getElementById("fecha_inicio_edit"+indice).value=null;
+                        document.getElementById("fecha_termino_edit"+indice).value=null;
+                        document.getElementById("horas_trabajo_edit"+indice).value=null;
+                        document.getElementById("mat_horas_edit"+indice).value=null;
+                        document.getElementById("no_mantenimientos_edit"+indice).value=null;
+                        document.getElementById("observaciones_edit"+indice).value=null;
+                        console.log("son iguales"+indice);
+                        alert("Ya elegiste este vehiculo");
+                        igual = true;
+                        break;
+                    }else{
+                        console.log("son diferentes");
+                        igual= false;
+                    }
+                }
+
+            }catch (TypeError) {
+                console.log("no existe ese objeto con ese nombre");
+            }
 
             if(vehiculo_data==null){
                 document.getElementById("nombre_vehiculo_edit"+indice).value=null;
                 document.getElementById("funcion_edit"+indice).value=null;
                 document.getElementById("matricula_edit"+indice).value=null;
             }else{
-                document.getElementById("nombre_vehiculo_edit"+indice).value=vehiculo_data.nombre;
-                document.getElementById("funcion_edit"+indice).value=vehiculo_data.funcion;
-                document.getElementById("matricula_edit"+indice).value=vehiculo_data.matricula;
+                if (igual==false){
+                    document.getElementById("nombre_vehiculo_edit"+indice).value=vehiculo_data.nombre;
+                    document.getElementById("funcion_edit"+indice).value=vehiculo_data.funcion;
+                    document.getElementById("matricula_edit"+indice).value=vehiculo_data.matricula;
+                }
             }
 
         });
@@ -1032,7 +1209,7 @@
                             '</div>'+
                         '<div class="col-md-3" style="margin-bottom: 10px;">'+
                                 '<label>Matricula del Vehiculo</label>'+
-                                '<select name="id_vehiculo'+j+'" class="form-control" id="id_vehiculo'+j+'" onchange="activar_envio(); pasar_datos_vehiculo(this.value,'+j+');" required>'+
+                                '<select name="id_vehiculo'+j+'" class="form-control" id="id_vehiculo'+j+'" onchange="activar_envio(); pasar_datos_vehiculo(this,'+j+');" required>'+
                                     '<option value="" disabled selected>.:Selecciona:.</option>'+
                                     '@foreach($vehiculos as $vehiculo)'+
                                     '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
@@ -1093,10 +1270,113 @@
 
 
                 );
+                
+                /*
+                $.ajax({
+                  url: "{{url('/get_vehiculos_services')}}",
+                  dataType: "json",
+                  //context: document.body
+                }).done(function(vehiculos_services) {
+                    if(vehiculos_services!=null){
+                        $.ajax({
+                          url: "{{url('/get_vehiculos')}}",
+                          dataType: "json",
+                          //context: document.body
+                        }).done(function(vehiculos_data) {
+                            if(vehiculos_data!=null){
+                                for(var i=0;i<vehiculos_services.length;i++){
+
+                                    for(var x=0;x<vehiculos_data.length;x++){
+                                        var f1 = new Date(vehiculos_services[i].fecha_fin);
+                                        console.log(vehiculos_services[i].fecha_fin);
+                                        var today = new Date();
+                                        // `getDate()` devuelve el día del mes (del 1 al 31)
+                                        var day = today.getDate();
+                                        // `getMonth()` devuelve el mes (de 0 a 11)
+                                        var month = today.getMonth() + 1;
+                                        // `getFullYear()` devuelve el año completo
+                                        var year = today.getFullYear();
+                                        //var fecha_complete=year+"-"+month+"-"+
+                                        var f2 = new Date(year+"-"+month+"-"+day);
+                                        if(vehiculos_services[i].id_vehiculo == vehiculos_data[x].id){
+                                            console.log(f1);console.log(f2);
+                                            if(f1 < f2){
+                                                //sepasamos si ya fue escogido
+                                                for (var n = 0; n < j-1; n++) {
+                                                    if(document.getElementById("id_vehiculo"+n).value != vehiculos_data[x].id){
+                                                        $("#id_vehiculo"+(j-1)).append('<option value="'+vehiculos_data[x].id+'">'+vehiculos_data[x].matricula+' - s</option>');
+                                                    }
+                                                }
+                                                
+                                                console.log("fecha menor");
+                                            }else{
+                                                console.log("fecha mayor");
+                                            }
+                                        }else{
+                                            //console.log(j);
+                                            for (var n = 0; n < j-1; n++) {
+                                                    if(document.getElementById("id_vehiculo"+n).value == vehiculos_data[x].id){
+                                                        //$("#id_vehiculo"+(j-1)).append('<option value="'+vehiculos_data[x].id+'">'+vehiculos_data[x].matricula+'</option>');
+                                                        console.log("son iguales");
+                                                    }else{
+                                                        console.log("son diferentes");
+                                                    }
+                                                }
+                                            
+                                        }
+
+                                    }
+                                }
+                                
+                            }
+                        });
+
+                        
+                    }
+                });
+                */
+
                 j++;
                 contador++;
 
+                $("#id_vehiculo"+(j-1)).empty();
+                console.log(j);
+                $("#id_vehiculo"+(j-1)).append('<option value="" disabled selected>.:Selecciona:.</option>');
+                $.ajax({
+                  url: "{{url('/search_vehiculos_filtro')}}",
+                  dataType: "json",
+                  //context: document.body
+                }).done(function(vehiculos_filtrado) {
+                    if(vehiculos_filtrado!=null){
+
+                        //vehiculos sin usar 
+                        if (vehiculos_filtrado[0] != null){
+                            for(var i=0;i<vehiculos_filtrado[0].length;i++){
+                                            
+                                $("#id_vehiculo"+(j-1)).append('<option value="'+vehiculos_filtrado[0][i].id+'">'+vehiculos_filtrado[0][i].matricula+'</option>');            
+                            }
+                        }
+                        //vehiculos con fecha terminada
+                        if (vehiculos_filtrado[1] != null){
+
+                            for(var i=0;i<vehiculos_filtrado[1].length;i++){
+                                        
+                                $("#id_vehiculo"+(j-1)).append('<option value="'+vehiculos_filtrado[1][i].id+'">'+vehiculos_filtrado[1][i].matricula+' - fecha terminada</option>');
+                                                      
+                            }
+
+                        }
+                        
+                        
+                        //console.log(vehiculos_filtrado[0]);
+                        //console.log(vehiculos_filtrado[1]);
+                            
+                    }
+                });
+
+
             }
+            //console.log(j);
             //console.log(contador);
             document.getElementById("cantidad_vehiculos").value=contador;
             activar_envio();
@@ -1118,11 +1398,9 @@
                             '</div>'+
                         '<div class="col-md-3" style="margin-bottom: 10px;">'+
                                 '<label>Matricula del Vehiculo</label>'+
-                                '<select name="id_vehiculo'+j_2+'" class="form-control" id="id_vehiculo_edit'+j_2+'" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this.value,'+j_2+');" required>'+
+                                '<select name="id_vehiculo'+j_2+'" class="form-control" id="id_vehiculo_edit'+j_2+'" onchange="activar_envio_2(); pasar_datos_vehiculo_2(this,'+j_2+');" required>'+
                                     '<option value="" disabled selected>.:Selecciona:.</option>'+
-                                    '@foreach($vehiculos as $vehiculo)'+
-                                    '<option value="{{$vehiculo->id}}">{{$vehiculo->matricula}}</option>'+
-                                    '@endforeach'+
+
                                 '</select>'+
                             '</div>'+
                             '<div class="col-md-3" style="margin-bottom: 10px;">'+
@@ -1183,6 +1461,48 @@
                 contador_2++;
 
             }
+            var ind=j_2-1;
+            $.ajax({
+              url: "{{url('/get_vehiculos_filtrados_edit')}}"+"/"+id_servicio,
+              dataType: "json",
+              //context: document.body
+            }).done(function(vehiculos_filtrado_edit) {
+                if(vehiculos_filtrado_edit!=null){
+
+                        //vehiculos sin usar 
+                        if(vehiculos_filtrado_edit[0] !=null){
+                            for(var i=0;i<vehiculos_filtrado_edit[0].length;i++){
+                                            
+                                $("#id_vehiculo_edit"+ind).append('<option value="'+vehiculos_filtrado_edit[0][i].id+'">'+vehiculos_filtrado_edit[0][i].matricula+'</option>');            
+                            }
+                        }
+                        //vehiculos con fecha terminada
+                        if(vehiculos_filtrado_edit[1] !=null){
+                            for(var i=0;i<vehiculos_filtrado_edit[1].length;i++){
+                                            
+                                $("#id_vehiculo_edit"+ind).append('<option value="'+vehiculos_filtrado_edit[1][i].id+'">'+vehiculos_filtrado_edit[1][i].matricula+' - fecha terminada</option>');
+                                            
+                                          
+                            }
+                        }
+                        if(vehiculos_filtrado_edit[0] !=null){
+                            for(var i=0;i<vehiculos_filtrado_edit[2].length;i++){
+                                            
+                                $("#id_vehiculo_edit"+ind).append('<option value="'+vehiculos_filtrado_edit[2][i].id_vehiculo+'">'+vehiculos_filtrado_edit[2][i].matricula_vehiculo+' - p</option>');
+                                            
+                                          
+                            }
+                        }
+
+                    //$("#id_vehiculo_edit"+ind).val(datos_servicio_pasado[i].id_vehiculo);
+
+                    //console.log(vehiculos_filtrado[0]);
+                    //console.log(vehiculos_filtrado[1]);
+                        
+                }
+            });
+
+
             //console.log(contador);
             document.getElementById("cantidad_vehiculos_edit").value=contador_2;
             activar_envio_2();
@@ -1200,11 +1520,45 @@
     $(document).on('click', '.eliminar_hijo_edit', function(){
         var id=$(this).attr("id"); 
         $('#contenedor_hijo_edit'+id+'').remove();
-        contador--;
+        contador_2--;
         //j--;
-        document.getElementById("cantidad_vehiculos_edit").value=contador;
+        document.getElementById("cantidad_vehiculos_edit").value=contador_2;
+        //console.log(contador_2);
         activar_envio_2();
     });
+
+    function detectar_seleccion_igual(select,position) {
+        try{
+
+            for (var n = 0; n < j; n++) {
+                var id_comprueba="id_vehiculo"+n;
+                if(document.getElementById("id_vehiculo"+n).value == select.value && id_comprueba != select.id){
+                    select.value=null;
+                    alert(document.getElementById("nombre_vehiculo"+position).value);
+                    document.getElementById("nombre_vehiculo"+position).value=null;
+                    document.getElementById("funcion"+position).value=null;
+                    document.getElementById("matricula"+position).value=null;
+                    document.getElementById("fecha_inicio"+position).value=null;
+                    document.getElementById("fecha_termino"+position).value=null;
+                    document.getElementById("horas_trabajo"+position).value=null;
+                    document.getElementById("mat_horas"+position).value=null;
+                    document.getElementById("no_mantenimientos"+position).value=null;
+                    document.getElementById("observaciones"+position).value=null;
+                    console.log("son iguales"+position);
+                    alert("Ya elegiste este vehiculo");
+                    return "si";
+                    break;
+                }else{
+                    console.log("son diferentes");
+                    return "no";
+                }
+            }
+
+        }catch (TypeError) {
+            console.log("no existe ese objeto con ese nombre");
+        }
+        
+    }
 
     //este es para saber que dispositivo se esta usando y mandarlo a otro lado al usuario ya que no se mira bien el pdf
     if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {

@@ -112,7 +112,7 @@
           @endforeach
           <tr style="font-weight: 0;">
             <td style="font-size: 30px; " ></td>
-            <td style="font-size: 30px;" colspan="4"><br>Observaciones generales del servicio: <br>{{$servicio_vehiculo->observaciones}}</td>
+            <td style="font-size: 30px;" colspan="4"><br>Observaciones generales del servicio: <br>{{$datos->observaciones}}</td>
             <td style="font-size: 30px; width: 50px;" ></td>
           </tr>
         </tbody>

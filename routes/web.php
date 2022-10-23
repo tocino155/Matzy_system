@@ -31,6 +31,9 @@ Route::get('/get_vehiculo/{id}', [SearchesController::class,'search_vehiculo'])-
 Route::get('/get_cp/{cp}', [SearchesController::class,'search_cp'])->name('search_cp');
 Route::get('/get_servicios/{id}', [SearchesController::class,'search_service'])->name('search_service');
 Route::get('/get_servicio_vehiculos/{id_servicio}', [SearchesController::class,'search_service_vehiculo'])->name('search_service_vehiculo');
+Route::get('/get_vehiculos', [SearchesController::class,'search_vehiculos'])->name('search_vehiculos');
+Route::get('/search_vehiculos_filtro', [SearchesController::class,'search_vehiculos_filtrados'])->name('search_vehiculos_filtrados');
+Route::get('/get_vehiculos_filtrados_edit/{id_servicio}', [SearchesController::class,'search_vehiculos_filtrados_edit'])->name('search_vehiculos_filtrados_edit');
 
 //home
 Route::get('/Home', [HomeController::class,'view_home'])->name('home');

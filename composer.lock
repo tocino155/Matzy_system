@@ -3871,7 +3871,6 @@
             "time": "2021-09-25T23:10:38+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "s-ichikawa/laravel-sendgrid-driver",
             "version": "3.0.4",
             "source": {

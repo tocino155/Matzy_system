@@ -6,9 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SearchesController;
 use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\ServicesController;
-
 use App\Http\Controllers\FinanceController;
-
 
 /*
 |--------------------------------------------------------------------------

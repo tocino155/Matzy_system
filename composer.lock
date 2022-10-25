@@ -3948,8 +3948,7 @@
             "time": "2021-06-06T15:18:57+00:00"
         },
         {
-=======
->>>>>>> 415bd2ac7a47c5a45fe4a7c825afa46b3fc4040f
+
             "name": "sabberworm/php-css-parser",
             "version": "8.4.0",
             "source": {
